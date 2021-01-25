@@ -1,8 +1,7 @@
 package com.cy.java.basic;
 
-public class HelloWord {
+public class Test1 {
     public static void main(String[] args) {
-        System.out.println("HelloWorld");
-
+        System.out.println("test");
     }
 }
