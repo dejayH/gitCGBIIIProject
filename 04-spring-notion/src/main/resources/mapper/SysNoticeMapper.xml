@@ -36,6 +36,24 @@
         or 1=2
         </where>
     </delete>
+    <select id="selectNotices"
+            parameterType="com.cy.pj.sys.pojo.pojoSysNotice"
+            resultType="com.cy.pj.sys.pojo.pojoSysNotice">
+        select *
+        from sys_notice
+        <where>
+            <if test="title!=null and title!=''">
+                and title like concat("%",#{title},"%")
+            </if>
+            <if test="createdUser!=null and createdUser!=''">
+                and createdUser like concat("%",#{createdUser},"%")
+            </if>
+            <if test="type!=null and type!=''">
+                and type=#{type}
+            </if>
+        </where>
+        order by createdTime desc
+    </select>
 
 </mapper>
     

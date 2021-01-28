@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface SysNotice {
 
@@ -31,4 +33,10 @@ public interface SysNotice {
      * */
 //    int deleteById(@Param("ids") Long... ids);
     int deleteById(Long... ids);
+
+    /**
+     * 查询通告信息
+     * */
+    List<pojoSysNotice> selectNotices(pojoSysNotice notice);
+
 }

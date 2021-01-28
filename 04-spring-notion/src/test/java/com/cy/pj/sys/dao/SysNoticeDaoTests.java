@@ -5,13 +5,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
 public class SysNoticeDaoTests {
     @Autowired
     private SysNotice sysNotice;
 
     @Test
-    void testInsertNotice(){
+    void testInsertNotice() {
         pojoSysNotice notice = new pojoSysNotice();
         notice.setTitle("CGB2011");
         notice.setContent("2021/3");
@@ -23,13 +25,13 @@ public class SysNoticeDaoTests {
     }
 
     @Test
-    void testSelectById(){
+    void testSelectById() {
         pojoSysNotice sys = sysNotice.selectById(1);
         System.out.println(sys);
     }
 
     @Test
-    void testUpdateNotice(){
+    void testUpdateNotice() {
         pojoSysNotice n = sysNotice.selectById(1);
         n.setType("2");
         n.setContent("放假");
@@ -38,8 +40,20 @@ public class SysNoticeDaoTests {
     }
 
     @Test
-    void testDeleteById(){
+    void testDeleteById() {
         int i = sysNotice.deleteById();
-        System.out.println("rows="+i);
+        System.out.println("rows=" + i);
+    }
+
+    @Test
+    void testSelectNotices(){
+        pojoSysNotice no = new pojoSysNotice();
+        no.setType("2");
+        no.setTitle("放假");
+        List<pojoSysNotice> list = sysNotice.selectNotices(no);
+        for (pojoSysNotice l : list) {
+            System.out.println(l);
+        }
+
     }
 }
