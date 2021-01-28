@@ -53,11 +53,9 @@ public class pojoSysNotice {
         this.remark = remark;
     }
 
-    //自己添加 set/get/toString 方法
-
     @Override
     public String toString() {
-        return "SysNotice{" +
+        return "pojoSysNotice{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", type='" + type + '\'' +
@@ -67,8 +65,10 @@ public class pojoSysNotice {
                 ", modifiedTime=" + modifiedTime +
                 ", createdUser='" + createdUser + '\'' +
                 ", modifiedUser='" + modifiedUser + '\'' +
+                ", remark='" + remark + '\'' +
                 '}';
     }
+//自己添加 set/get/toString 方法
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

@@ -20,6 +20,26 @@ public class SysNoticeDaoTests {
         notice.setCreatedUser("tony");
         notice.setModifiedUser("tony");
         sysNotice.insertNotice(notice);
+    }
 
+    @Test
+    void testSelectById(){
+        pojoSysNotice sys = sysNotice.selectById(1);
+        System.out.println(sys);
+    }
+
+    @Test
+    void testUpdateNotice(){
+        pojoSysNotice n = sysNotice.selectById(1);
+        n.setType("2");
+        n.setContent("放假");
+        n.setModifiedUser("timy");
+        sysNotice.updateNotice(n);
+    }
+
+    @Test
+    void testDeleteById(){
+        int i = sysNotice.deleteById();
+        System.out.println("rows="+i);
     }
 }
