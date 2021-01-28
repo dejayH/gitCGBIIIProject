@@ -7,3 +7,13 @@ spring:
     password: root
 mybatis:
   mapperLocations: classpath:/mapper/*.xml
+  configuration:
+    #配置sql超时
+    default-statement-timeout: 30
+    #驼峰命名规则
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com:
+     cy: DEBUG
