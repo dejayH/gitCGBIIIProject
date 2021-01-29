@@ -21,7 +21,7 @@ public interface SysNotice {
      * @return 查询到的notice对象(存储表中的一行记录)
      * */
     @Select("select * from sys_notice where id=#{id}")
-    pojoSysNotice selectById(Integer id);
+    pojoSysNotice selectById(Long id);
 
     /**
      * 更新对象

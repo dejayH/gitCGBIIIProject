@@ -26,13 +26,13 @@ public class SysNoticeDaoTests {
 
     @Test
     void testSelectById() {
-        pojoSysNotice sys = sysNotice.selectById(1);
+        pojoSysNotice sys = sysNotice.selectById(1L);
         System.out.println(sys);
     }
 
     @Test
     void testUpdateNotice() {
-        pojoSysNotice n = sysNotice.selectById(1);
+        pojoSysNotice n = sysNotice.selectById(1L);
         n.setType("2");
         n.setContent("放假");
         n.setModifiedUser("timy");

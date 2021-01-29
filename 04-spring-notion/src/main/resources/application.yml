@@ -16,4 +16,6 @@ mybatis:
 logging:
   level:
     com:
-     cy: DEBUG
+     cy: debug
+  file:
+    path: D:\CGDIII\log
