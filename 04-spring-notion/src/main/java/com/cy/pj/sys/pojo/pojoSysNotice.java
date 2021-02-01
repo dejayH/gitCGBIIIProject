@@ -1,7 +1,18 @@
 package com.cy.pj.sys.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
+//@Setter
+//@Getter
+//@ToString
+@Data
 public class pojoSysNotice {
     private static final long serialVersionUID = 1L;
     /**
@@ -27,6 +38,8 @@ public class pojoSysNotice {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")//默认
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     private Date createdTime;
     /**
      * 修改时间
@@ -42,107 +55,8 @@ public class pojoSysNotice {
     private String modifiedUser;
     /**
      * 备注
-     * */
+     */
     private String remark;
 
-    public String getRemark() {
-        return remark;
-    }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return "pojoSysNotice{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", type='" + type + '\'' +
-                ", content='" + content + '\'' +
-                ", status='" + status + '\'' +
-                ", createdTime=" + createdTime +
-                ", modifiedTime=" + modifiedTime +
-                ", createdUser='" + createdUser + '\'' +
-                ", modifiedUser='" + modifiedUser + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
-//自己添加 set/get/toString 方法
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Date getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Date getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(Date modifiedTime) {
-        this.modifiedTime = modifiedTime;
-    }
-
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
-    public String getModifiedUser() {
-        return modifiedUser;
-    }
-
-    public void setModifiedUser(String modifiedUser) {
-        this.modifiedUser = modifiedUser;
-    }
 }

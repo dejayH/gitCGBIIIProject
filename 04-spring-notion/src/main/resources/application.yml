@@ -5,6 +5,11 @@ spring:
     url: jdbc:mysql://localhost:3306/db_notice?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
+    #配置JDK代理
+  aop:
+    proxy-target-class: false
+
+#数据库
 mybatis:
   mapperLocations: classpath:/mapper/*.xml
   configuration:
@@ -13,9 +18,10 @@ mybatis:
     #驼峰命名规则
     map-underscore-to-camel-case: true
 
+#日志
 logging:
   level:
     com:
-     cy: debug
+      cy: debug
   file:
     path: D:\CGDIII\log

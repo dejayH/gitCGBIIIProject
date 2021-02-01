@@ -1,5 +1,6 @@
 package com.cy.pj.sys.service.impl;
 
+import com.cy.pj.common.annotation.RequiredLog;
 import com.cy.pj.sys.dao.SysNotice;
 import com.cy.pj.sys.pojo.pojoSysNotice;
 import com.cy.pj.sys.service.SysnoticeService;
@@ -14,22 +15,24 @@ import java.util.List;
 public class SysNoticeServiceImpl implements SysnoticeService {
 
 
-    private static final Logger logger= LoggerFactory.getLogger(SysNoticeServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SysNoticeServiceImpl.class);
 
     @Autowired
     private SysNotice sysNotice;
 
+    @RequiredLog(operation = "新增公告信息")
     @Override
     public int saveNotice(pojoSysNotice notice) {
         int rows = sysNotice.insertNotice(notice);
         return rows;
     }
 
+    @RequiredLog(operation = "查询公告列表")
     @Override
     public List<pojoSysNotice> findNotices(pojoSysNotice notice) {
-        logger.debug("start:{}",System.currentTimeMillis());
+        logger.debug("start:{}", System.currentTimeMillis());
         List<pojoSysNotice> list = sysNotice.selectNotices(notice);
-        logger.debug("end:{}",System.currentTimeMillis());
+        logger.debug("end:{}", System.currentTimeMillis());
         return list;
     }
 
