@@ -2,6 +2,7 @@ package com.cy.pj.sys.service.aspect;
 
 import com.cy.pj.common.annotation.RequiredLog;
 import com.cy.pj.sys.pojo.SysLog;
+import com.cy.pj.sys.service.SysLogService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,18 +10,22 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Date;
 
 /**
  * @author uid
  */
+
+@Order(1)
 @Slf4j
 @Aspect
 @Component
+
 public class SysLogAspect {
     /**
      * 切入点
@@ -36,17 +41,20 @@ public class SysLogAspect {
     public Object doLogAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long t1 = System.currentTimeMillis();
         log.info("before:" + t1);
+        System.out.println("SyslogAspect.@Around.before");
         try {
+            joinPoint.getArgs();
+            joinPoint.proceed();
             Object result = joinPoint.proceed();
             long t2 = System.currentTimeMillis();
             log.info("after:" + t2);
-            doLogInfo(joinPoint,(t2-t1),null);
+            doLogInfo(joinPoint, (t2 - t1), null);
             return result;
         } catch (Throwable e) {
             e.printStackTrace();
             long t3 = System.currentTimeMillis();
             log.error("exception {}", t3);
-            doLogInfo(joinPoint,(t3-t1),e);
+            doLogInfo(joinPoint, (t3 - t1), e);
             throw e;
         }
 
@@ -66,15 +74,15 @@ public class SysLogAspect {
         //获取目标方法对象
         //获取方法签名信息
         MethodSignature ms = (MethodSignature) joinPoint.getSignature();
-            //通过字节码对象以及方法信息获取目标方法对象
+        //通过字节码对象以及方法信息获取目标方法对象
         Method targetMethod = tc.getDeclaredMethod(ms.getName(), ms.getParameterTypes());
-            //获取方法上的requiredLog注解
+        //获取方法上的requiredLog注解
         RequiredLog requiredLog = targetMethod.getAnnotation(RequiredLog.class);
         //获取注解中operation属性的值
         String operation = requiredLog.operation();
 
         //1.4获取方法信息
-        String targetClaMethod = tc.getName()+"."+targetMethod;
+        String targetClaMethod = tc.getName() + "." + targetMethod;
 
         //1.5获取方法参数
         //获取实际参数值
@@ -92,7 +100,7 @@ public class SysLogAspect {
         userLog.setMethod(targetClaMethod);
         //执行方法时调用的参数
         userLog.setParams(string);
-        if(e!=null){
+        if (e != null) {
             //操作状态
             userLog.setStatus(0);
             //错误信息
@@ -104,5 +112,9 @@ public class SysLogAspect {
 
         //3.记录日志
         log.info("user.oper{}", new ObjectMapper().writeValueAsString(userLog));
+        sysLogService.saveLog(userLog);
     }
+
+    @Autowired
+    private SysLogService sysLogService;
 }

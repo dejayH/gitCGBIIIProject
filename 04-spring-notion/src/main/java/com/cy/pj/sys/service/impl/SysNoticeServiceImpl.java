@@ -42,7 +42,7 @@ public class SysNoticeServiceImpl implements SysnoticeService {
         int rows = sysNotice.deleteById(ids);
         return rows;
     }
-
+    @RequiredLog(operation = "基于id查询通知")
     @RequiredTime
     @Override
     public pojoSysNotice findById(Long id) {
