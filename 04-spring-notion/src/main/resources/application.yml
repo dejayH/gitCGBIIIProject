@@ -6,8 +6,8 @@ spring:
     username: root
     password: root
     #配置JDK代理
-  aop:
-    proxy-target-class: false
+ # aop:
+  #  proxy-target-class: false
 
 #数据库
 mybatis:

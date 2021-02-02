@@ -1,6 +1,7 @@
 package com.cy.pj.sys.service.impl;
 
 import com.cy.pj.common.annotation.RequiredLog;
+import com.cy.pj.common.annotation.RequiredTime;
 import com.cy.pj.sys.dao.SysNotice;
 import com.cy.pj.sys.pojo.pojoSysNotice;
 import com.cy.pj.sys.service.SysnoticeService;
@@ -42,6 +43,7 @@ public class SysNoticeServiceImpl implements SysnoticeService {
         return rows;
     }
 
+    @RequiredTime
     @Override
     public pojoSysNotice findById(Long id) {
         pojoSysNotice Notice = sysNotice.selectById(id);
