@@ -13,3 +13,4 @@ public interface SysLogService {
 
     List<SysLog> selectLogs(SysLog sysLog);
 }
+

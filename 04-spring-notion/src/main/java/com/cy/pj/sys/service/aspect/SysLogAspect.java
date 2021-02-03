@@ -113,6 +113,12 @@ public class SysLogAspect {
         //3.记录日志
         log.info("user.oper{}", new ObjectMapper().writeValueAsString(userLog));
         sysLogService.saveLog(userLog);
+//        new Thread(){
+//            @Override
+//            public void run(){
+//                sysLogService.saveLog(userLog);
+//            }
+//        }.start();
     }
 
     @Autowired

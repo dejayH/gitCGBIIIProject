@@ -5,6 +5,15 @@ spring:
     url: jdbc:mysql://localhost:3306/db_notice?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
+  task:
+    execution:
+      thread-name-prefix: test-task-
+      pool:
+        core-size: 8
+        queue-capacity: 2
+        max-size: 10
+        keep-alive: 60000
+        allow-core-thread-timeout: false
     #配置JDK代理
  # aop:
   #  proxy-target-class: false

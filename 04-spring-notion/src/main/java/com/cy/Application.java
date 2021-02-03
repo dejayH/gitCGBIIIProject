@@ -2,6 +2,7 @@ package com.cy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * 启动类由@SpringBootApplication注解
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * JVM 参数分析
  * 1)检测类的加载:-XX:+TraceClassLoading
  */
+@EnableAsync//此注解用于告诉springboot,启动是初始化一个线程池(ThreadPoolExecution)
 @SpringBootApplication
 public class Application {
 
