@@ -1,5 +1,6 @@
 package com.cy.pj.sys.controller;
 
+import com.cy.pj.common.util.PageUtil;
 import com.cy.pj.sys.dao.SysNotice;
 import com.cy.pj.sys.pojo.pojoSysNotice;
 import com.cy.pj.sys.service.SysnoticeService;
@@ -18,6 +19,7 @@ public class SysNoticeController {
 
     @GetMapping ("/doFindNotices")
     public JsonResult doFindNotices(pojoSysNotice notice) {
+        PageUtil.startPage();
         return new JsonResult(sysnoticeService.findNotices(notice));
     }
 
