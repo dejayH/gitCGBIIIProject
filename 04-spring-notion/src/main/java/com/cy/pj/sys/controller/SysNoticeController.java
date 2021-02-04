@@ -17,32 +17,32 @@ public class SysNoticeController {
     @Autowired
     private SysnoticeService sysnoticeService;
 
-    @GetMapping ("/doFindNotices")
+    @GetMapping
     public JsonResult doFindNotices(pojoSysNotice notice) {
         PageUtil.startPage();
         return new JsonResult(sysnoticeService.findNotices(notice));
     }
 
-    @PostMapping("/doSaveNotice")
+    @PostMapping
     public JsonResult doSaveNotice(@RequestBody pojoSysNotice notice) {
         sysnoticeService.saveNotice(notice);
         System.out.println("save ok");
         return new JsonResult("save ok");
     }
 
-    @RequestMapping("/doFingById/{id}")
+    @RequestMapping("/{id}")
     public JsonResult doFindById(@PathVariable Long id) {
 
         return new JsonResult(sysnoticeService.findById(id));
     }
 
-    @PutMapping("/doUpdateNotice")
+    @PutMapping
     public JsonResult doUpdateNotice(pojoSysNotice notice){
         sysnoticeService.updateNotice(notice);
         return new JsonResult("update ok");
     }
 
-    @DeleteMapping("/doDeleteNotice")
+    @DeleteMapping("/{ids}")
     public JsonResult doDeleteNotice(Long... ids){
         sysnoticeService.deleteById(ids);
         return new JsonResult("delete ok");

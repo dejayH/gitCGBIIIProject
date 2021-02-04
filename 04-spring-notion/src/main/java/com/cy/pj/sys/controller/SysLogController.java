@@ -1,5 +1,6 @@
 package com.cy.pj.sys.controller;
 
+import com.cy.pj.common.util.PageUtil;
 import com.cy.pj.sys.pojo.SysLog;
 import com.cy.pj.sys.service.SysLogService;
 import com.cy.pj.sys.web.pojo.JsonResult;
@@ -25,6 +26,7 @@ public class SysLogController {
 
     @GetMapping("/doFindLogs")
     public JsonResult doFindLogs(SysLog sysLog) {
-        return new JsonResult(sysLogService.selectLogs(sysLog));
+        return new JsonResult(PageUtil.startPage().doSelectPageInfo(()->sysLogService.selectLogs(sysLog)));
+
     }
 }
