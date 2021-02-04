@@ -16,7 +16,7 @@ import java.util.Map;
  */
 @Slf4j //lombok会在当前java文件编译成class文件时，会自动在类文件中添加一个log对象
 public class TimeAccessInterceptor implements HandlerInterceptor {
-   // private static final Logger log=
+   //private static final Logger log=
            // LoggerFactory.getLogger(TimeAccessInterceptor.class);
 
     /**preHandle方法会在目标handler方法执行之前进行访问拦截

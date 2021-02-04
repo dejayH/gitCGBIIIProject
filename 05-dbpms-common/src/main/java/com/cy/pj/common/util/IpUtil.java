@@ -3,18 +3,15 @@ package com.cy.pj.common.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class IPUtils {
+public class IpUtil {
     private static Logger logger =
-            LoggerFactory.getLogger(IPUtils.class);
+            LoggerFactory.getLogger(IpUtil.class);
 
     public static String getIpAddr() {
-        HttpServletRequest request = ((ServletRequestAttributes)
-                RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletRequest request =ServletUtil.getRequest();
         String ip = null;
         try {
             ip = request.getHeader("x-forwarded-for");
@@ -30,7 +27,6 @@ public class IPUtils {
                     "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getHeader("HTTP_CLIENT_IP");
             }
-
             if (StringUtils.isEmpty(ip) ||
                     "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getHeader("HTTP_X_FORWARDED_FOR");
