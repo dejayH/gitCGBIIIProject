@@ -7,7 +7,7 @@ import com.cy.pj.common.pojo.Node;
 import java.util.List;
 
 @Mapper
-public interface SysMenvDao {
+public interface SysMenuDao {
     /**
      * 查询所有菜单
      * @return 返回查询到的菜单信息

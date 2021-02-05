@@ -3,12 +3,12 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/db_notice?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/dbpms?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
 
 mybatis:
-  mapperLocations: classpath:/mapper/*.xml
+  mapperLocations: classpath:/mapper/*/*.xml
 
 logging:
   level:

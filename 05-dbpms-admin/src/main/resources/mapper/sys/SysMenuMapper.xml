@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cy.pj.sys.dao.SysMenvDao">
+<mapper namespace="com.cy.pj.sys.dao.SysMenuDao">
 
     <!--新增菜单-->
     <insert id="insertMenu">
         INSERT INTO sys_menus
-        (name,type,url,sort,parentId,remark,createdTime,modifiedTime,createdUser,modifiedUser)
+        (name,type,url,sort,parentId,createdTime,modifiedTime,createdUser,modifiedUser)
         VALUES
-        (#{name}, #{type}, #{url}, #{sort}, #{parentId}, #{remark},now(),now(), #{createdUser}, #{modifiedUser})
+        (#{name}, #{type}, #{url}, #{sort}, #{parentId}, now(),now(), #{createdUser}, #{modifiedUser})
     </insert>
 
     <!--更新菜单信息-->
