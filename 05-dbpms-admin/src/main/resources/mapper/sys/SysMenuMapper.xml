@@ -6,9 +6,9 @@
     <!--新增菜单-->
     <insert id="insertMenu">
         INSERT INTO sys_menus
-        (name,type,url,sort,parentId,createdTime,modifiedTime,createdUser,modifiedUser)
+        (name,type,url,sort,parentId,remark,createdTime,modifiedTime,createdUser,modifiedUser)
         VALUES
-        (#{name}, #{type}, #{url}, #{sort}, #{parentId}, now(),now(), #{createdUser}, #{modifiedUser})
+        (#{name}, #{type}, #{url}, #{sort}, #{parentId}, #{remark},now(),now(), #{createdUser}, #{modifiedUser})
     </insert>
 
     <!--更新菜单信息-->
