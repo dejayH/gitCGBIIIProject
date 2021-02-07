@@ -5,6 +5,8 @@ import com.cy.pj.sys.dao.SysMenuDao;
 import com.cy.pj.sys.pojo.SysMenu;
 import com.cy.pj.sys.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      * 查询所有菜单
      * @return
      */
+    @Cacheable(value="sysMenu",key = "'selectMenus'")//缓存应用的切入点方法(底层aop)
     @Override
     public List<SysMenu> findMenus() {
         return sysMenuDao.selectMenus();
@@ -28,16 +31,27 @@ public class SysMenuServiceImpl implements SysMenuService {
      * @param entity
      * @return
      */
+    @CacheEvict(value="sysMenu",key = "'selectMenus'")
     @Override
     public int saveMenu(SysMenu entity) {
         return sysMenuDao.insertMenu(entity);
     }
 
+    /**
+     * 更新菜单信息
+     * @param entity
+     * @return
+     */
+    @CacheEvict(value="sysMenu",key = "'selectMenus'")
     @Override
     public int updateMenu(SysMenu entity) {
         return sysMenuDao.updateMenu(entity);
     }
 
+    /**
+     * 查询菜单树
+     * @return
+     */
     @Override
     public List<Node> findMenuTreeNodes() {
         return sysMenuDao.selectMeneTreeNodes();

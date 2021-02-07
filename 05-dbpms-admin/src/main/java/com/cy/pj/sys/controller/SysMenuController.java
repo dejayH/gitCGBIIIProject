@@ -13,7 +13,7 @@ public class SysMenuController {
     private SysMenuService sysMenuService;
 
     @PutMapping
-    public JsonResult doUpdateMenu(SysMenu menu){
+    public JsonResult doUpdateMenu(@RequestBody SysMenu menu){
         sysMenuService.updateMenu(menu);
         return new JsonResult("Update OK");
     }

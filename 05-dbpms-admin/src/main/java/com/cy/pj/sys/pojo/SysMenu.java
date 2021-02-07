@@ -1,5 +1,6 @@
 package com.cy.pj.sys.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -27,8 +28,10 @@ public class SysMenu implements Serializable {
     /**备注*/
     private String remark;
     /**创建的时间*/
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     private Date createdTime;
     /**更新的时间*/
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     private Date modifiedTime;
     /**创建者*/
     private String createdUser;
