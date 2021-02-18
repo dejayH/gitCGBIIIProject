@@ -17,26 +17,25 @@
          modifiedTime,
          createdUser,
          modifiedUser)
-        VALUES
-        (#{id},
-         #{name},
-         #{remark},
-         now(),
-         now(),
-         #{createdUser},
-         #{modifiedUser})
+        VALUES (#{id},
+                #{name},
+                #{remark},
+                now(),
+                now(),
+                #{createdUser},
+                #{modifiedUser})
     </insert>
 
     <!--基于条件查询角色信息-->
     <select id="selectRoles" resultType="com.cy.pj.sys.pojo.SysRole">
         SELECT
-            id,
-            name,
-            remark,
-            createdTime,
-            modifiedTime,
-            createdUser,
-            modifiedUser
+        id,
+        name,
+        remark,
+        createdTime,
+        modifiedTime,
+        createdUser,
+        modifiedUser
         FROM sys_roles
         <where>
             <if test="name!=null and name!=''">
@@ -56,15 +55,13 @@
     </resultMap>
     <!--基于id查询角色和角色对应的菜单信息-->
     <select id="selectById" resultMap="roleMenu">
-        SELECT
-            r.id,
-            r.name,
-            r.remark,
-            rm.menu_id
-        FROM
-            sys_roles r
-            LEFT JOIN sys_role_menus rm
-               ON r.id = rm.role_id
+        SELECT r.id,
+               r.name,
+               r.remark,
+               rm.menu_id
+        FROM sys_roles r
+                 LEFT JOIN sys_role_menus rm
+                           ON r.id = rm.role_id
         WHERE r.id = #{id}
     </select>
 
@@ -72,9 +69,8 @@
     <update id="updateRole">
         UPDATE
             sys_roles
-        SET
-            NAME = #{name},
-            remark = #{remark},
+        SET NAME         = #{name},
+            remark       = #{remark},
             modifiedTime = NOW(),
             modifiedUser = #{modifienUser}
         WHERE id = #{id}

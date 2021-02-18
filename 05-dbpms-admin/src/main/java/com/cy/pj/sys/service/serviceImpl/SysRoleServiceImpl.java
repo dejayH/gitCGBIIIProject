@@ -41,7 +41,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         int rows = sysRoleDao.updateRole(entity);
         //保存角色菜单关系数据
         sysRoleMenuDao.deleteByRoleId(entity.getId());
-        sysRoleMenuDao.insertRoleMenus(entity.getId(),entity.getMenuIds());
+        sysRoleMenuDao.insertRoleMenus(entity.getId(), entity.getMenuIds());
         return rows;
     }
 

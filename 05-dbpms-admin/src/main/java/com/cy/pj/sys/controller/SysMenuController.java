@@ -13,24 +13,24 @@ public class SysMenuController {
     private SysMenuService sysMenuService;
 
     @PutMapping
-    public JsonResult doUpdateMenu(@RequestBody SysMenu menu){
+    public JsonResult doUpdateMenu(@RequestBody SysMenu menu) {
         sysMenuService.updateMenu(menu);
         return new JsonResult("Update OK");
     }
 
     @PostMapping
-    public JsonResult doSaveMenu(@RequestBody SysMenu menu){
+    public JsonResult doSaveMenu(@RequestBody SysMenu menu) {
         sysMenuService.saveMenu(menu);
         return new JsonResult("Save OK");
     }
 
     @GetMapping("/treeNodes")
-    public JsonResult doFindMenusTreeNodes(){
+    public JsonResult doFindMenusTreeNodes() {
         return new JsonResult(sysMenuService.findMenuTreeNodes());
     }
 
     @GetMapping
-    public JsonResult doFindMenus(){
+    public JsonResult doFindMenus() {
         return new JsonResult(sysMenuService.findMenus());
     }
 }

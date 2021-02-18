@@ -11,7 +11,8 @@ public interface SysRoleMenuDao {
 
     /**
      * 新增角色菜单关系数据
-     * @param roleId 角色的id
+     *
+     * @param roleId  角色的id
      * @param menuIds 角色菜单的id
      * @return 行数
      */
@@ -19,6 +20,7 @@ public interface SysRoleMenuDao {
 
     /**
      * 基于角色ID删除角色和菜单关系数据
+     *
      * @param roleId 角色id
      * @return 数量
      */
