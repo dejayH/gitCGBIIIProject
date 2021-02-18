@@ -18,7 +18,7 @@ public interface SysRoleDao {
     List<SysRole> selectRoles(SysRole role);
 
     /**
-     * 基于id查找对应的角色
+     * 基于id查找对应的角色和角色对应的菜单信息
      * @param id
      * @return 查询到的角色对象
      */
@@ -40,4 +40,10 @@ public interface SysRoleDao {
     @Select("SELECT id,name FROM sys_roles")
     List<CheckBox> selectCheckRoles();
 
+    /**
+     * 更新角色信息
+     * @param entity
+     * @return
+     */
+    int updateRole(SysRole entity);
 }
