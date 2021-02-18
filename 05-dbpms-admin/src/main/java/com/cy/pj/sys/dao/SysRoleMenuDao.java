@@ -3,6 +3,8 @@ package com.cy.pj.sys.dao;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author uid
  */
@@ -16,7 +18,7 @@ public interface SysRoleMenuDao {
      * @param menuIds 角色菜单的id
      * @return 行数
      */
-    void insertRoleMenus(Integer roleId, Integer[] menuIds);
+    int insertRoleMenus(Integer roleId, List<Integer> menuIds);
 
     /**
      * 基于角色ID删除角色和菜单关系数据

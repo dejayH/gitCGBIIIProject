@@ -39,7 +39,7 @@ public interface SysRoleService {
     int updateRole(SysRole entity);
 
     /**
-     * 为用户授权时,查询课授权的角色
+     * 为用户授权时,查询可授权的角色
      *
      * @return
      */
