@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.pj.sys.dao.SysUserDao">
+
+    <!--查询用户及对应的部门相关信息-->
+    <select id="selectUser" resultType="com.cy.pj.sys.pojo.SysUser">
+        SELECT
+            u.username username,
+            u.password password,
+            u.salt salt,
+            u.email email,
+            u.mobile mobile,
+            u.valid valid,
+            u.deptId deptId,
+            u.createdTime createdTime,
+            u.modifiedTime modifiedTime,
+            u.createdUser createdUser,
+            u.modifiedUser modifiedUser,
+            d.`name` deptName
+        FROM
+            sys_users u
+        LEFT JOIN sys_depts d
+        ON u.`deptId` = d.`id`
+        <where>
+            <if test="username!=null and username!=''">
+                username LIKE CONCAT("%",#{uesrname},"%")
+            </if>
+        </where>
+        ORDER BY createdTime DESC
+    </select>
+    <select id="selectById" resultType="com.cy.pj.sys.pojo.SysUser">
+        SELECT
+            u.username username,
+            u.password password,
+            u.salt salt,
+            u.email email,
+            u.mobile mobile,
+            u.valid valid,
+            u.deptId deptId,
+            u.createdTime createdTime,
+            u.modifiedTime modifiedTime,
+            u.createdUser createdUser,
+            u.modifiedUser modifiedUser,
+            d.`name` deptName
+        FROM
+            sys_users u
+        LEFT JOIN sys_depts d
+        ON u.`deptId` = d.`id`
+        WHERE u.id=#{id}
+
+    </select>
+
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_users (
+            username,
+            password,
+            salt,
+            email,
+            mobile,
+            valid,
+            deptId,
+            createdTime,
+            modifiedTime,
+            createdUser,
+            modifiedUser
+        )
+        VALUES
+        (
+            #{username},
+            #{password},
+            #{salt},
+            #{email},
+            #{mobile},
+            #{valid},
+            #{deptId},
+            now(),
+            now(),
+            #{createdUser},
+            #{modifiedUser}
+        )
+    </insert>
+
+    <!--修改用户状态信息-->
+    <update id="validById">
+        UPDATE
+            sys_user
+        SET
+            valid = #{valid},
+            modifiedTime = NOW(),
+            modifiedUser = #{modifiedUser},
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateUser">
+        UPDATE
+            sys_users
+        SET
+            username=#{username},
+            deptId=#{deptId},
+            mobile=#{mobile},
+            email=#{email},
+            modifiedTime=#{modifiedTime},
+            modifiedUser=#{modifiedUser}
+        WHERE id=#{id}
+    </update>
+
+</mapper>
+    
