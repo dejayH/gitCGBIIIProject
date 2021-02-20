@@ -8,6 +8,12 @@ import java.util.List;
 /**负责用户数据范围逻辑规范的定义*/
 @Mapper
 public interface SysUserDao {
+    /**
+     * 基于用户名查询用户信息(登录时需要)
+     * @param username
+     * @return
+     */
+    SysUser selectUserByUsername(String username);
 
     /**
      * 基于id查找用户信息

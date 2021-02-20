@@ -51,6 +51,13 @@
         WHERE u.id=#{id}
 
     </select>
+    <select id="selectUserByUsername" resultType="com.cy.pj.sys.pojo.SysUser">
+        SELECT
+            *
+        FROM
+            sys_users
+        WHERE username=#{username}
+    </select>
 
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sys_users (

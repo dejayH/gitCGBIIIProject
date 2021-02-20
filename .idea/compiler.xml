@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="03-spring" />
+        <module name="05-dbpms-admin" />
+        <module name="05-dbpms-common" />
+        <module name="04-spring-notion" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="03-spring" target="1.8" />
+      <module name="04-spring-notion" target="1.8" />
+      <module name="05-dbpms-admin" target="1.8" />
+      <module name="05-dbpms-common" target="1.8" />
+      <module name="05-dbpms-common (1)" target="1.8" />
+      <module name="05-dbpms-parent" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="03-spring" options="-parameters" />
+      <module name="04-spring-notion" options="-parameters" />
+      <module name="05-dbpms-admin" options="-parameters" />
+      <module name="05-dbpms-common" options="-parameters" />
+      <module name="05-dbpms-common (1)" options="-parameters" />
+    </option>
+  </component>
+</project>

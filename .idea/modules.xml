@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/03-spring/03-spring.iml" filepath="$PROJECT_DIR$/03-spring/03-spring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/04-spring-notion/04-spring-notion.iml" filepath="$PROJECT_DIR$/04-spring-notion/04-spring-notion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/05-dbpms-admin/05-dbpms-admin.iml" filepath="$PROJECT_DIR$/05-dbpms-admin/05-dbpms-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/05-dbpms-common/05-dbpms-common.iml" filepath="$PROJECT_DIR$/05-dbpms-common/05-dbpms-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/05-dbpms-parent/05-dbpms-parent.iml" filepath="$PROJECT_DIR$/05-dbpms-parent/05-dbpms-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/gitCGBIIIProject.iml" filepath="$PROJECT_DIR$/.idea/gitCGBIIIProject.iml" />
+    </modules>
+  </component>
+</project>
