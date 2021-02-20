@@ -1,6 +1,7 @@
 package com.cy.pj.sys.service;
 
 import com.cy.pj.sys.pojo.SysUser;
+import org.springframework.data.relational.core.sql.In;
 
 import java.util.List;
 
@@ -8,6 +9,15 @@ import java.util.List;
  * 定义用户业务接口,负责用户业务逻辑规范定义
  */
 public interface SysUserService {
+
+    /**
+     * 基于用户id修改用户状态(0,1)
+     * @param id
+     * @param valid
+     * @return
+     */
+    int validById(Integer id, Integer valid);
+
     /**
      * 查询用户信息
      * @param entity
@@ -35,4 +45,6 @@ public interface SysUserService {
      * @return
      */
     int updateUser(SysUser entity);
+
+
 }

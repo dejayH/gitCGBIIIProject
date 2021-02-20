@@ -6,6 +6,7 @@
     <!--查询用户及对应的部门相关信息-->
     <select id="selectUser" resultType="com.cy.pj.sys.pojo.SysUser">
         SELECT
+            u.id id,
             u.username username,
             u.password password,
             u.salt salt,
@@ -84,11 +85,11 @@
     <!--修改用户状态信息-->
     <update id="validById">
         UPDATE
-            sys_user
+            sys_users
         SET
             valid = #{valid},
-            modifiedTime = NOW(),
-            modifiedUser = #{modifiedUser},
+            modifiedTime = now(),
+            modifiedUser = #{modifiedUser}
         WHERE id = #{id}
     </update>
 

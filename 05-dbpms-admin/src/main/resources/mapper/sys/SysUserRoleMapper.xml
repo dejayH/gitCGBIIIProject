@@ -28,7 +28,7 @@
             role_id
         FROM
             sys_user_roles
-        WHERE user_id={userId}
+        WHERE user_id = #{userId}
     </select>
 
 </mapper>
