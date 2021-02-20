@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.pj.sys.dao.SysRoleDao">
+
+    <!--新增用户信息-->
+    <!--
+    1)useGeneratedKeys="true" 获取insert操作是写入的自增主键值
+    2)keyProperty="id" 将自增主键值给参数对象的id属性
+    -->
+    <insert id="insertRole" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_roles
+        (id,
+         name,
+         remark,
+         createdTime,
+         modifiedTime,
+         createdUser,
+         modifiedUser)
+        VALUES (#{id},
+                #{name},
+                #{remark},
+                now(),
+                now(),
+                #{createdUser},
+                #{modifiedUser})
+    </insert>
+
+    <!--基于条件查询角色信息-->
+    <select id="selectRoles" resultType="com.cy.pj.sys.pojo.SysRole">
+        SELECT
+        id,
+        name,
+        remark,
+        createdTime,
+        modifiedTime,
+        createdUser,
+        modifiedUser
+        FROM sys_roles
+        <where>
+            <if test="name!=null and name!=''">
+                name LIKE concat("%",#{name},"%")
+            </if>
+        </where>
+        ORDER BY createdTime DESC
+    </select>
+
+    <resultMap id="roleMenu" type="com.cy.pj.sys.pojo.SysRole">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="remark" column="remark"/>
+        <result property="createdTime" column="createdTime"/>
+        <collection property="menuIds" ofType="integer">
+            <result column="menu_id"/>
+        </collection>
+    </resultMap>
+    <!--基于id查询角色和角色对应的菜单信息-->
+    <select id="selectById" resultMap="roleMenu">
+        SELECT r.id,
+               r.name,
+               r.remark,
+               r.createdTime,
+               rm.menu_id
+        FROM sys_roles r
+                 LEFT JOIN sys_role_menus rm
+                           ON r.id = rm.role_id
+        WHERE r.id = #{id}
+    </select>
+
+    <!--更新角色自身信息-->
+    <update id="updateRole">
+        UPDATE
+            sys_roles
+        SET NAME         = #{name},
+            remark       = #{remark},
+            modifiedTime = now(),
+            modifiedUser = #{modifiedUser}
+        WHERE id = #{id}
+    </update>
+
+</mapper>
+    

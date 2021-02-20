@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.pj.sys.dao.SysMenuDao">
+
+    <!--新增菜单-->
+    <insert id="insertMenu">
+        INSERT INTO sys_menus
+        (name,type,url,sort,parentId,remark,createdTime,modifiedTime,createdUser,modifiedUser)
+        VALUES
+        (#{name}, #{type}, #{url}, #{sort}, #{parentId}, #{remark},now(),now(), #{createdUser}, #{modifiedUser})
+    </insert>
+
+    <!--更新菜单信息-->
+    <update id="updateMenu">
+        UPDATE sys_menus
+        SET name = #{name},
+            type = #{type},
+            url = #{url},
+            sort = #{sort},
+            parentId = #{parentId},
+            remark = #{remark},
+            modifiedTime = now(),
+            modifiedUser = #{modifiedUser}
+        WHERE id=#{id}
+    </update>
+
+    <!--查询所有菜单-->
+    <select id="selectMenus" resultType="com.cy.pj.sys.pojo.SysMenu">
+        SELECT c.*,p.name parentName
+        FROM sys_menus c
+        LEFT JOIN sys_menus p
+        ON c.parentId=p.id
+    </select>
+</mapper>
+    
