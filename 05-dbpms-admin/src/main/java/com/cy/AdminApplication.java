@@ -1,6 +1,8 @@
 package com.cy;
 
 import com.cy.pj.sys.service.realm.ShiroRealm;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
@@ -61,4 +63,7 @@ public class AdminApplication {
         return sessionManager;
     }
 
+    @Bean
+    public CacheManager shiroCacheManager(){
+        return new MemoryConstrainedCacheManager();    }
 }
