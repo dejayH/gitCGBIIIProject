@@ -2,8 +2,10 @@ package com.cy;
 
 import com.cy.pj.sys.service.realm.ShiroRealm;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -38,5 +40,19 @@ public class AdminApplication {
         //配置以/**开头的资源必须都要经过认证，其中authc为shiro框架指定的认证过滤器
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;
+    }
+
+    //配置session管理器对象
+    @Bean
+    public SessionManager sessionManager(){
+        DefaultWebSessionManager sessionManager=new DefaultWebSessionManager();
+        //session的超时时间
+        sessionManager.setGlobalSessionTimeout(1000*60*60);//1个小时
+        //sessionManager.setGlobalSessionTimeout(2*60*1000);//2分钟
+        //删除无效session
+        sessionManager.setDeleteInvalidSessions(true);
+        //当客户端cookie被禁用是否要设置url重写
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
+        return sessionManager;
     }
 }

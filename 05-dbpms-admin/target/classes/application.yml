@@ -13,3 +13,8 @@ mybatis:
 logging:
   level:
     com.cy: debug
+shiro:
+  loginUrl: /login.html
+  rememberMeManager:
+    cookie:
+      maxAge: 3600

@@ -34,7 +34,7 @@ public class ShiroRealm extends AuthorizingRealm {//AuthorizingRealm继承了Aut
         SysUser user=(SysUser) principalCollection.getPrimaryPrincipal();
         //2.基于登录用户获取用户权限
         Set<String> set= sysMenuDao.selectUserPermissions(user.getId());
-        System.out.println("set==="+set);
+        //System.out.println("set==="+set);
         //3.封装
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(set);

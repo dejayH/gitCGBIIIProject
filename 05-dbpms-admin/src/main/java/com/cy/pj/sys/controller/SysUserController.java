@@ -21,6 +21,7 @@ public class SysUserController {
         Subject subject = SecurityUtils.getSubject();
         //执行登录(将用户名和密码提交给securitymanager)
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+        token.setRememberMe(true);
         subject.login(token);
         return new JsonResult("login successful");
     }
