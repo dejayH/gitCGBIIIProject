@@ -61,7 +61,9 @@ public class AdminApplication {
         //当客户端cookie被禁用是否要设置url重写
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         return sessionManager;
+
     }
+
 
     @Bean
     public CacheManager shiroCacheManager(){
