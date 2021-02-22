@@ -7,6 +7,7 @@ import com.cy.pj.sys.dao.SysUserDao;
 import com.cy.pj.sys.dao.SysUserRoleDao;
 import com.cy.pj.sys.pojo.SysUser;
 import com.cy.pj.sys.service.SysUserService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,23 @@ public class SysUserServiceImpl implements SysUserService {
     @Autowired
     private SysUserRoleDao sysUserRoleDao;
 
+    /**
+     * 更新用户状态
+     * @param id 用户id
+     * @param valid 用户状态
+     * @return
+     *  @RequiresPermissions 注解由shiro框架定义，基于此注解定义授权切入点方法，
+     *  也就是说用户访问此方法时，需要授权才可访问。shiro框架底层会基于登录用户
+     *  获取登录用户权限(菜单的权限标识)，然后判定用户权限中是否包含@RequiresPermissions
+     *  注解中定义的权限标识.
+     */
+    @RequiresPermissions("sys:user:update")
     @Override
     public int validById(Integer id, Integer valid) {
         int rows = sysUserDao.validById(id, valid, "admin");
-        if(rows==0)
+        if(rows==0) {
             throw new ServiceException("记录可能不存在了");
+        }
         return rows;
     }
 
@@ -38,8 +51,9 @@ public class SysUserServiceImpl implements SysUserService {
     public SysUser findById(Integer id) {
         //查询用户以及用户对应的部门信息
         SysUser user = sysUserDao.selectById(id);
-        if(user==null)
+        if(user==null) {
             throw new ServiceException("没有找到对应用户id");
+        }
         //根据用户id获取角色id
         List<Integer> roles = sysUserRoleDao.selectRoleIdsByUserId(id);
         //将角色id封装到uesr上
@@ -69,8 +83,9 @@ public class SysUserServiceImpl implements SysUserService {
     public int updateUser(SysUser entity) {
         //更新用户自身信息
         int rows = sysUserDao.updateUser(entity);
-        if(rows==0)
+        if(rows==0) {
             throw new ServiceException("记录可能已经不存在");
+        }
         //更新用户和角色关系数据
         sysUserRoleDao.deletaByUserId(entity.getId());
         sysUserRoleDao.insertUserRoles(entity.getId(), entity.getRoleIds());

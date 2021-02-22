@@ -18,6 +18,6 @@ public class MD5Test {
         SimpleHash md5 = new SimpleHash("MD5", password,salt);
         password=md5.toHex();
         System.out.println(password);
-
+//        e10adc3949ba59abbe56e057f20f883e
     }
 }

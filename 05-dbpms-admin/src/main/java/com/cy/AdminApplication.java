@@ -29,8 +29,12 @@ public class AdminApplication {
         DefaultShiroFilterChainDefinition chainDefinition =
                 new DefaultShiroFilterChainDefinition();
         //指定过滤链中的过滤规则,例如：
-        //配置/menu/*开头的资源，可以匿名访问(不用登录就可以访问),其中anon为shiro框架指定的匿名过滤器
-        //chainDefinition.addPathDefinition("/menu/*","anon");
+        //配置/user/login/**开头的资源，可以匿名访问(不用登录就可以访问),其中anon为shiro框架指定的匿名过滤器
+        chainDefinition.addPathDefinition("/user/login/**","anon");
+        //登出.
+
+        
+        chainDefinition.addPathDefinition("/user/logout","logout");
         //配置以/**开头的资源必须都要经过认证，其中authc为shiro框架指定的认证过滤器
         chainDefinition.addPathDefinition("/**", "authc");
         return chainDefinition;

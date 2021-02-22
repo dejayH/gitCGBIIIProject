@@ -16,12 +16,11 @@ public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
 
-    @GetMapping("/{username}/{password}")
+    @GetMapping("/login/{username}/{password}")
     public JsonResult doLogin(@PathVariable String username,@PathVariable String password){
         Subject subject = SecurityUtils.getSubject();
-        //执行登录(将用户名和密码提交给secuity
+        //执行登录(将用户名和密码提交给securitymanager)
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
-
         subject.login(token);
         return new JsonResult("login successful");
     }

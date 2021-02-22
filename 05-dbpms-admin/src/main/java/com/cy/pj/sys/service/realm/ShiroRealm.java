@@ -1,15 +1,19 @@
 package com.cy.pj.sys.service.realm;
 
+import com.cy.pj.sys.dao.SysMenuDao;
 import com.cy.pj.sys.dao.SysUserDao;
 import com.cy.pj.sys.pojo.SysUser;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Set;
 
 /**
  * 创建realm类型，并在此类型的对象中定义认证和授权数据获取逻辑
@@ -18,12 +22,23 @@ public class ShiroRealm extends AuthorizingRealm {//AuthorizingRealm继承了Aut
     @Autowired
     private SysUserDao sysUserDao;
 
+    @Autowired
+    private SysMenuDao sysMenuDao;
+
     /**
      * 负责获取并封装授权信息
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        //1.获取登录用户信息
+        SysUser user=(SysUser) principalCollection.getPrimaryPrincipal();
+        //2.基于登录用户获取用户权限
+        Set<String> set= sysMenuDao.selectUserPermissions(user.getId());
+        System.out.println("set==="+set);
+        //3.封装
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.setStringPermissions(set);
+        return info;
     }
 
     /**

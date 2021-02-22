@@ -6,9 +6,17 @@ import org.apache.ibatis.annotations.Select;
 import com.cy.pj.common.pojo.Node;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface SysMenuDao {
+
+    /**
+     *
+     * @param userId
+     * @return
+     */
+    Set<String> selectUserPermissions(Integer userId);
     /**
      * 查询所有菜单
      *
