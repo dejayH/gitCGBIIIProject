@@ -32,5 +32,20 @@
         LEFT JOIN sys_menus p
         ON c.parentId=p.id
     </select>
+
+    <!--获取用户权限标识-->
+    <select id="selectUserPermissions" resultType="java.lang.String">
+        SELECT DISTINCT
+            permission
+        FROM
+            sys_user_roles ur
+        JOIN sys_role_menus rm
+        JOIN sys_menus m ON ur.role_id = rm.role_id
+        AND rm.menu_id = m.id
+        WHERE
+            ur.user_id = #{userId}
+        AND m.permission IS NOT NULL
+        AND TRIM(m.permission) != ''
+    </select>
 </mapper>
     
