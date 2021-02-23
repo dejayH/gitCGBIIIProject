@@ -21,7 +21,7 @@
       <module name="05-dbpms-common" target="1.8" />
       <module name="05-dbpms-common (1)" target="1.8" />
       <module name="05-dbpms-parent" target="1.8" />
-      <module name="06-dbpms-ui" target="1.8" />
+      <module name="06-dbpms-ui" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

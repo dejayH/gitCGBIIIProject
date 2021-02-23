@@ -4,21 +4,48 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        ul>li{
-            list-style-type: none;
-        }
+        ul>li{list-style-type: none}
     </style>
 </head>
 <body>
-    <h1>Login</h1>
-    <form action="http://localhost:80/user/login" method="get">
+     <h1>The Login Form</h1>
+     <form >
         <ul>
             <li>username:</li>
-            <li><input type="text" name="username"></li>
+            <li><input type="text" name="username" id="username"></li>
             <li>password:</li>
-            <li><input type="password" name="password"></li>
-            <li><input type="submit" value="Login"></li>
+            <li><input type="password" name="password" id="password"></li>
+            <li><input type="button" value="Login" onclick="doLogin()"></li>
         </ul>
-    </form>
+     </form>
+     <script>
+         function doLogin(){
+              let username=document.forms[0].username.value;
+              let password=document.forms[0].password.value;
+              let url="http://localhost/user/login/"+username+"/"+password;
+              location.href=url;
+         }
+         function doAjaxLogin(){
+            //创建XmlHttpRequest对象
+             let xhr=new XMLHttpRequest();
+             //设置状态监听(可选)
+             xhr.onreadystatechange=function (){
+                 if(xhr.readyState==4){
+                     if(xhr.status==200){
+                         aletr(xhr.responseText);
+                     }
+                 }
+             }
+             //建立链接
+             debugger
+             let username=document.forms[0].username.value;
+             let password=document.forms[0].password.value;
+             let url="http://localhost/user/login/${username}/${password}";
+             xhr.open("get",url,true);
+             //发送请求
+             xhr.send(null);
+
+         }
+     </script>
 </body>
 </html>

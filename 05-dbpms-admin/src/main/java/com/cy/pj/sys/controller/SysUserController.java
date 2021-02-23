@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
 
     @GetMapping("/login/{username}/{password}")
     public JsonResult doLogin(@PathVariable String username, @PathVariable String password) {
+
         Subject subject = SecurityUtils.getSubject();
+        System.out.println("username=="+username);
         //执行登录(将用户名和密码提交给securitymanager)
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         token.setRememberMe(true);
