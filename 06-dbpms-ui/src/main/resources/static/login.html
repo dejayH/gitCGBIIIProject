@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="js/jquery.min.js"></script>
     <style>
-        ul>li{list-style-type: none}
+        ul>li{
+            list-style-type: none
+        }
     </style>
 </head>
 <body>
-     <h1>The Login Form</h1>
+     <h1>The Login</h1>
      <form >
         <ul>
             <li>username:</li>
             <li><input type="text" name="username" id="username"></li>
             <li>password:</li>
             <li><input type="password" name="password" id="password"></li>
-            <li><input type="button" value="Login" onclick="doAjaxLogin()"></li>
+            <li><input type="button" value="Login" onclick="doJQueryAjaxLogin()"></li>
         </ul>
      </form>
      <script>
@@ -46,8 +49,25 @@
              xhr.open("get",url,true);
              //发送请求
              xhr.send(null);
-
          }
+
+         function doJQueryAjaxLogin(){
+             debugger
+             //1.请求参数
+             let username= $("#username").val();
+             let password= $("#password").val();
+             //2.请求url
+             let url = 'http://localhost/user/login/${username}/${password}';
+             //3.异步请求
+             $.ajax({
+                 method : "get",
+                 url : url,
+                 success(result){
+                     console.log(result);
+                 }
+             });
+         }
+
      </script>
 </body>
 </html>
