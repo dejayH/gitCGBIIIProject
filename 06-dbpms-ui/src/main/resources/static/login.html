@@ -15,7 +15,7 @@
             <li><input type="text" name="username" id="username"></li>
             <li>password:</li>
             <li><input type="password" name="password" id="password"></li>
-            <li><input type="button" value="Login" onclick="doLogin()"></li>
+            <li><input type="button" value="Login" onclick="doAjaxLogin()"></li>
         </ul>
      </form>
      <script>
@@ -32,12 +32,14 @@
              xhr.onreadystatechange=function (){
                  if(xhr.readyState==4){
                      if(xhr.status==200){
-                         aletr(xhr.responseText);
+                        /* alert(xhr.responseText);*/
+                         let jsonObj=JSON.parse(xhr.responseText);
+                         console.log(jsonObj);
+                         alert(jsonObj.message);
                      }
                  }
              }
              //建立链接
-             debugger
              let username=document.forms[0].username.value;
              let password=document.forms[0].password.value;
              let url="http://localhost/user/login/${username}/${password}";
