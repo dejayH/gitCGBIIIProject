@@ -15,7 +15,7 @@ logging:
     com.cy: debug
 
 shiro:
-  loginUrl: /login.html
+  loginUrl: http://localhost:90/login.html
   rememberMeManager:
     cookie:
       maxAge: 3600

@@ -19,7 +19,10 @@ public class SysUser implements Serializable {
     private String salt;
     private String mobile;
     private String email;
-    private Integer valid = 1;//默认为有效状态,0 代表无效
+    /**
+     * 默认为有效状态,0 代表无效
+     */
+    private Integer valid = 1;
     private Integer deptId;
     private String deptName;
     /**

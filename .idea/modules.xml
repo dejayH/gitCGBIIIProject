@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/05-dbpms-admin/05-dbpms-admin.iml" filepath="$PROJECT_DIR$/05-dbpms-admin/05-dbpms-admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/05-dbpms-common/05-dbpms-common.iml" filepath="$PROJECT_DIR$/05-dbpms-common/05-dbpms-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/05-dbpms-parent/05-dbpms-parent.iml" filepath="$PROJECT_DIR$/05-dbpms-parent/05-dbpms-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/06-dbpms-ui/06-dbpms-ui.iml" filepath="$PROJECT_DIR$/06-dbpms-ui/06-dbpms-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/gitCGBIIIProject.iml" filepath="$PROJECT_DIR$/.idea/gitCGBIIIProject.iml" />
     </modules>
   </component>
