@@ -1,6 +1,7 @@
 package com.cy.pj.sys.service.serviceImpl;
 
 
+import com.cy.pj.common.annotation.RequiredLog;
 import com.cy.pj.common.exception.ServiceException;
 import com.cy.pj.sys.dao.SysRoleDao;
 import com.cy.pj.sys.dao.SysUserDao;
@@ -22,17 +23,6 @@ public class SysUserServiceImpl implements SysUserService {
     @Autowired
     private SysUserRoleDao sysUserRoleDao;
 
-    /**
-     * 更新用户状态
-     * @param id 用户id
-     * @param valid 用户状态
-     * @return
-     *  @RequiresPermissions 注解由shiro框架定义，基于此注解定义授权切入点方法，
-     *  也就是说用户访问此方法时，需要授权才可访问。shiro框架底层会基于登录用户
-     *  获取登录用户权限(菜单的权限标识)，然后判定用户权限中是否包含@RequiresPermissions
-     *  注解中定义的权限标识.
-     */
-    @RequiresPermissions("sys:user:update")
     @Override
     public int validById(Integer id, Integer valid) {
         int rows = sysUserDao.validById(id, valid, "admin");
