@@ -15,7 +15,7 @@ public class SysLog {
     private String method;
     private String params;
     private Long time;
-    private Integer status;
+    private Integer status=1;
     private String error;
     @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     private Date createdTime;

@@ -2,41 +2,127 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>日志管理</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-LCPyFKQyML7mqtS+4XytolfqyqSlcbB3bvDuH9vX2sdQMxRonb/M3b9EmhCNNNrV" crossorigin="anonymous"></script>
+    <script src="/js/jquery.min.js"></script>
 </head>
 <body>
-    <script src="/js/jquery.min.js"></script>
-    <h1>The Index Page</h1>
-    <div>
-        <button onclick="doGetLogs()">日志管理</button>
-        <button>菜单管理</button>
-        <button>XXXX</button>
-        <button>XXXX</button>
-    </div>
-    <div id="container">
-        <table>
-            <thead>
-            <tr>
-                <th><input type="checkbox" id="checkAll"></th>
-                <th>操作人员</th>
-                <th>操作名称</th>
-                <th>请求方法</th>
-                <th>IP地址</th>
-                <th>操作状态</th>
-                <th>操作时间</th>
-            </tr>
-            </thead>
-            <tbody id="tbody">
-            <tr><td colspan="7">数据正在加载中.....</td></tr>
-            </tbody>
-        </table>
+    <div class="content">
+        <h1>日志管理</h1>
+        <div>
+            <button onclick="doGetLogs()" class="btn btn-primary">刷新</button>
+            <button onclick="doDeleteLogs()" class="btn btn-danger">删除</button>
+        </div>
+        <div id="container">
+            <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" id="checkAll"></th>
+                    <th>操作人员</th>
+                    <th>操作名称</th>
+                    <th>请求方法</th>
+                    <th>IP地址</th>
+                    <th>操作状态</th>
+                    <th>操作时间</th>
+                </tr>
+                </thead>
+                <tbody id="tbodyId">
+                <tr><td colspan="7">数据正在加载中.....</td></tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div id="pageId">
+                <span class="total">总记录数(1)</span>
+                <span class="pages">总页数(1)</span>
+                <span class="pageNum">当前页(1)</span>
+                <button class="first">首页</button>
+                <button class="pre" >上一页</button>
+                <button class="next">下一页</button>
+                <button class="last">尾页</button>
+            </div>
+        </div>
     </div>
     <script>
-        function doGetLogs(){
+        $(function (){
+            //注册分页操作点击事件
+            $("#pageId").on("click",".first,.pre,.next,.last",doJumpToPage);
+            //页面加载完成就去查询
+            doGetLogs();
+            $("#checkAll").change(doChangeTBodyCheckBoxState);
+            //tbody中checkbox对象事件注册
+            $("#tbodyId").on("change","input:checkbox",doChangeTheadCheckBoxState);
+        });
+
+        function doChangeTheadCheckBoxState(){
+            //1.定义初始状态
+            let flag=true;
+            //2.获取tbody中所有checkbox对象状态逻辑与的结果
+            $("#tbodyId input:checkbox").each(function (){
+                flag=flag&&$(this).prop("checked");
+            });
+            //3.修改thead中CheckBox对象状态
+            $("#checkAll").prop("checked",flag);
+        }
+
+        function doChangeTBodyCheckBoxState(){
+            //1.获取thead中CheckBox的状态
+            let flag=$(this).prop("checked");
+            //2.修改tbody中CheckBox的状态
+            $("#tbodyId input:checkbox").prop("checked",flag);
+
+        }
+        function doDeleteLogs(){
             // debugger
+            //1获取选中记录id
+            let checkedIds=[]
+            $("#tbodyId input:checkbox:checked").each(function (){
+                checkedIds.push($(this).val());
+            })
+            // console.log(checkedIds);
+            if(checkedIds.length==0){
+                alert("请选中");
+                return;
+            }
+            //2.构建请求参数
+            let id=checkedIds.toString();
+            console.log("id",id);
+            //3.构建请求url
+            let url = `http://localhost/log/${id}`;
+            //4.发送ajax请求,删除log
+            $.ajax({
+                method:"delete",
+                url:url,
+                success(result) {
+                    doHandleDeleteResponseResult(result);
+                }
+            });
+        }
+        function doHandleDeleteResponseResult(result){
+            if(result.state==1){
+                doHandleDeleteOk(result);
+            }else{
+                // doHandleDeleteError(result);
+            }
+        }
+        function doHandleDeleteOk(result){
+            alert(result.message);
+            window.pageCurrent=1;
+            $("#checkAll").prop("checked",false);
+            doGetLogs();
+        }
+        function doGetLogs(){
+            //1.请求的参数
+            let params={pageCurrent:window.pageCurrent};
+            // debugger
+            //2.请求url
             let url="http://localhost/log";
+            //3.发送ajax请求
             $.ajax({
                 url:url,
+                data:params,
                 success(result) {
                     console.log(result);
                     //$("#container").html(JSON.stringify(result))
@@ -55,11 +141,11 @@
             //初始化日志列表信息
             doInitLogListInfo(result.data.list);
             //初始化日志分页信息
-            //doInitLogPageInfo(result.data);
+            doInitLogPageInfo(result.data);
         }
         function doInitLogListInfo(list){
             //1.获取tbody对象,并清空原有内容
-            let tBody=$("#tbody");
+            let tBody=$("#tbodyId");
             tBody.empty();
             //2.迭代list集合,追加新内容
             list.forEach((item)=>{
@@ -76,6 +162,42 @@
                         <td>${item.status?"成功":"失败"}</td>
                         <td>${new Date(item.createdTime).toLocaleString()}</td>
                     </tr>`
+        }
+        //初始化分页信息
+        function doInitLogPageInfo(data){
+            console.log("data",data);
+            $(".total").html(`总记录数(${data.total})`);
+            $(".pages").html(`总页数(${data.pages})`);
+            $(".pageNum").html(`当前页(${data.pageNum})`);
+            window.pageCurrent=data.pageNum;
+            window.pageCount=data.pages;
+
+        }
+        //分页事件处理函数
+        function doJumpToPage(){
+            //1.获取点击对象的class属性值(通过这个值判定这是哪个对象)
+            let cls=$(this).prop("class");
+            // alert(cls);
+            //2.基于点击对象修改当前页码值
+            let pageCurrent=window.pageCurrent;
+            let pageCount=window.pageCount;
+            if(cls=="first"){
+                pageCurrent=1;
+            }else if(cls=="pre"&&pageCurrent>1){
+                pageCurrent--;
+            }else if(cls=="next"&&pageCurrent<pageCount){
+                pageCurrent++;
+            }else if(cls=="last"){
+                pageCurrent=pageCount;
+            }else {
+                return;
+            }
+            //3.基于新的页码值重新执行分页查询
+            console.log("pageCurrent",pageCurrent);
+            //3.1存储新页码值
+            window.pageCurrent=pageCurrent;
+            //3.2重新查询
+            doGetLogs();
         }
     </script>
 </body>

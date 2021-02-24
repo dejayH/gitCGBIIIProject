@@ -1,5 +1,6 @@
 package com.cy.pj.sys.controller;
 
+import com.cy.pj.common.annotation.RequiredLog;
 import com.cy.pj.common.pojo.JsonResult;
 import com.cy.pj.sys.pojo.SysMenu;
 import com.cy.pj.sys.service.SysMenuService;
@@ -30,6 +31,7 @@ public class SysMenuController {
     }
 
     @GetMapping
+    @RequiredLog(operation = "菜单列表")
     public JsonResult doFindMenus() {
         return new JsonResult(sysMenuService.findMenus());
     }

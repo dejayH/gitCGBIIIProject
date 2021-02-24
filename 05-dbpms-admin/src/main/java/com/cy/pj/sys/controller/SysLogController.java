@@ -15,9 +15,10 @@ public class SysLogController {
     @Autowired
     private SysLogService sysLogService;
 
-    @DeleteMapping
+    @DeleteMapping("/{ids}")
     public JsonResult doDeleteById(@PathVariable Long... ids) {
-        return new JsonResult(sysLogService.deleteById(ids));
+        sysLogService.deleteById(ids);
+        return new JsonResult("删除成功");
     }
 
     @GetMapping("/{id}")
