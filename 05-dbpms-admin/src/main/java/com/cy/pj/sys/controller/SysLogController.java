@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/log")
 @RestController
+@CrossOrigin
 public class SysLogController {
 
     @Autowired

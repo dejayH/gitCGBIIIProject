@@ -3,71 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="js/jquery.min.js"></script>
     <style>
-        ul>li{
-            list-style-type: none
-        }
+        ul>li{list-style-type: none}
     </style>
 </head>
 <body>
-     <h1>The Login</h1>
-     <form >
+     <h1>The Login Form</h1>
+     <form>
         <ul>
             <li>username:</li>
-            <li><input type="text" name="username" id="username"></li>
+            <li><input type="text" name="username" id="usernameId"></li>
             <li>password:</li>
-            <li><input type="password" name="password" id="password"></li>
-            <li><input type="button" value="Login" onclick="doJQueryAjaxLogin()"></li>
+            <li><input type="password" name="password" id="passwordId"></li>
+            <li><input type="button" value="Login" onclick="doAxiosAjaxLogin()"></li>
         </ul>
      </form>
+     <script src="/js/jquery.min.js"></script>
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
      <script>
+         //JS调试: debugger,console.log(),排除法
+         //非ajax方式的同步请求(所有操作都在主线程完成)
          function doLogin(){
               let username=document.forms[0].username.value;
               let password=document.forms[0].password.value;
-              let url="http://localhost/user/login/"+username+"/"+password;
-              location.href=url;
+              let url=`http://localhost/user/login/${username}/${password}`;
+              location.href=url;//允许直接跨域访问(http://localhost:9000--->http://localhost:80)
          }
-         function doAjaxLogin(){
-            //创建XmlHttpRequest对象
+         //Ajax 原生方式(四个步骤)-可以通过新的线程发请求
+         function doAjaxLogin(){//Ajax技术的入口对象XmlHttpRequest对象
+              //创建XmlHttpRequest对象(Ajax 技术应用的入口对象)
              let xhr=new XMLHttpRequest();
-             //设置状态监听(可选)
-             xhr.onreadystatechange=function (){
-                 if(xhr.readyState==4){
-                     if(xhr.status==200){
-                        /* alert(xhr.responseText);*/
+              //设置状态监听(可选),监听客户端与服务端的通讯状态
+             xhr.onreadystatechange=function(){//客户端与服务端通讯状态发生变化时执行此函数
+                 if(xhr.readyState==4){//表示客户端与服务端会话结束，并且服务端响应到客户端的数据已接收完成
+                     if(xhr.status==200){//200表示服务端响应OK，500表示响应异常
+                         //xhr.responseText为服务端响应到客户端的文本数据
+                        // alert(xhr.responseText);//jsonStr (服务端响应到客户端数据)
                          let jsonObj=JSON.parse(xhr.responseText);
                          console.log(jsonObj);
                          alert(jsonObj.message);
+                         //后续登录成功跳转到一个页面，也是在这里执行
                      }
                  }
              }
-             //建立链接
+              //建立链接
              let username=document.forms[0].username.value;
              let password=document.forms[0].password.value;
-             let url="http://localhost/user/login/${username}/${password}";
-             xhr.open("get",url,true);
+             let url=`http://localhost/user/login/${username}/${password}`;
+             xhr.open("get",url,true);//true表示异步(启动新线程与服务端通讯)
              //发送请求
-             xhr.send(null);
+             xhr.send(null);//get请求send方法不传任何内容或者传null
+             //当请求为异步请求时，一旦执行了send方法，程序会继续向下执行。
+             console.log("==send 结束===");
+             //说明：
+             //ajax最大优势：按需异步请求，局部刷新，提高响应速度
+             //ajax最大劣势：不可以直接跨域访问
          }
-
+         //JQuery方式的ajax请求，定义了封装ajax操作的相关方法
          function doJQueryAjaxLogin(){
              debugger
              //1.请求参数
-             let username= $("#username").val();
-             let password= $("#password").val();
+             let username=$("#usernameId").val();//val为value的缩写
+             let password=$("#passwordId").val();
              //2.请求url
-             let url = 'http://localhost/user/login/${username}/${password}';
-             //3.异步请求
-             $.ajax({
-                 method : "get",
-                 url : url,
-                 success(result){
-                     console.log(result);
+             let url=`http://localhost/user/login/${username}/${password}`;
+             //3.发送ajax异步请求(ajax函数为jquery中的一个核心的ajax函数)
+             $.ajax({//封装原生ajax请求的四个步骤
+                 method:"get",//默认就是get
+                 url:url,
+                 success(result){//readyState==4 && status==200
+                     alert(result.message);
                  }
              });
          }
-
+         //作业：例如axios中的ajax函数发送get请求执行登录业务
+         function doAxiosAjaxLogin(){
+             //1.请求参数
+             let username=$("#usernameId").val();//val为value的缩写
+             let password=$("#passwordId").val();
+             //2.请求url
+             let url=`http://localhost/user/login/${username}/${password}`;
+             axios.get(url).then(function (response){
+                 console.log(response);
+                 alert(response.data.message);
+             })
+             .catch(function (error){
+                console.log(error);
+             });
+         }
      </script>
 </body>
 </html>

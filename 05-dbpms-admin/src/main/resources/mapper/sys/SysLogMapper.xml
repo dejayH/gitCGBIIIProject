@@ -11,13 +11,13 @@
             method,
             params,
             TIME,
-            STATUS,
+            status,
             error,
             createdTime
         )
         VALUES
         (#{username}, #{ip}, #{operation}, #{method}, #{params},
-         #{time}, #{status}, #{error}, #{createdTime})
+         #{time},#{status},#{error}, #{createdTime})
     </insert>
 
     <delete id="deleteById">
