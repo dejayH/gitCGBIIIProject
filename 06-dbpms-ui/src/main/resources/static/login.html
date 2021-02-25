@@ -15,7 +15,7 @@
             <li><input type="text" name="username" id="usernameId"></li>
             <li>password:</li>
             <li><input type="password" name="password" id="passwordId"></li>
-            <li><input type="button" value="Login" onclick="doAxiosAjaxLogin()"></li>
+            <li><input type="button" value="Login" onclick="doJQueryAjaxLogin()"></li>
         </ul>
      </form>
      <script src="/js/jquery.min.js"></script>
@@ -71,8 +71,12 @@
              $.ajax({//封装原生ajax请求的四个步骤
                  method:"get",//默认就是get
                  url:url,
+                 crossDomain:true,
+                 xhrFields:{withCredent:true},
                  success(result){//readyState==4 && status==200
-                     alert(result.message);
+                     if(result.state==1){
+                         location.href = "/default.html"
+                     }
                  }
              });
          }
@@ -83,9 +87,11 @@
              let password=$("#passwordId").val();
              //2.请求url
              let url=`http://localhost/user/login/${username}/${password}`;
-             axios.get(url).then(function (response){
+             axios
+                 .get(url)
+                 .then(function (response){
                  console.log(response);
-                 alert(response.data.message);
+                 location.href="/default.html";
              })
              .catch(function (error){
                 console.log(error);

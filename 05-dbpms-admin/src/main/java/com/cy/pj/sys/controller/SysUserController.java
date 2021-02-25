@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin
+//@CrossOrigin
 public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
@@ -31,7 +31,7 @@ public class SysUserController {
         return new JsonResult("login successful");
     }
 
-    @RequiresPermissions("sys:user:view")
+//    @RequiresPermissions("sys:user:view")
     @RequiredLog(operation="用户列表")
     @GetMapping
     public JsonResult doFindUsers(SysUser entity) {

@@ -105,18 +105,22 @@
 
       //分页查询日志信息
       function doGetLogs(){
+          debugger
           //1.请求的参数
           //let data=`pageCurrent=${window.pageCurrent}`;
           let data={pageCurrent:window.pageCurrent};
           //2.请求的url
           let url="http://localhost/log/";
           //3.发送ajax请求
-          $.ajax({url,data,success(result){
-               console.log(result);
-               //$("#container").html(JSON.stringify(result))
-               //处理服务端响应结果
-               doHandleQueryResponseResult(result);
-           }})
+          $.ajax({url:url,
+              data:data,
+              crossDomain:true,
+              xhrFields:{withCredentials:true},
+              success(result){console.log(result);
+                  //$("#container").html(JSON.stringify(result))
+                  //处理服务端响应结果
+                  doHandleQueryResponseResult(result);
+          }})
       }
       function doHandleQueryResponseResult(result){
           console.log("result",result);
