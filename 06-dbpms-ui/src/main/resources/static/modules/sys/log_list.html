@@ -1,0 +1,169 @@
+<div class="log">
+      <div>
+          <button onclick="doGetLogs()"     class="btn btn-primary">刷新</button>
+          <button onclick="doDeleteLogs()"  class="btn btn-danger">删除</button>
+      </div>
+      <div>
+      <table class="table">
+          <thead>
+             <tr>
+              <th><input type="checkbox" id="checkAll">全选</th>
+              <th>操作人员</th>
+              <th>操作名称</th>
+              <th>请求方法</th>
+              <th>IP地址</th>
+              <th>操作状态</th>
+              <th>操作时间</th>
+             </tr>
+          </thead>
+          <tbody id="tbodyId">
+             <tr><td colspan="7">数据正在加载中.....</td></tr>
+          </tbody>
+      </table>
+      </div>
+      <div class="pagination"></div>
+  </div>
+  <script>
+      $(function(){
+          //页面加载完成就去查询
+          $(".pagination").load("/modules/common/page.html",doGetLogs)
+          //Thread中全选checkbox事件处理
+          $("#checkAll").change(doChangeTBodyCheckBoxState);
+          //tbody中checkbox对象事件注册
+          $("#tbodyId").on("change","input:checkbox",doChangeTheadCheckBoxState);
+      })
+      //基于tbody中checkbox状态修改thead中checkbox状态
+      function doChangeTheadCheckBoxState(){
+          //1.定义初始状态
+          let flag=true;
+          //2.获取tbody中所有checkbox对象状态逻辑与的结果
+          $("#tbodyId input:checkbox")
+          .each(function(){
+              flag=flag&&$(this).prop("checked");
+          });
+          //3.修改thead中checkbox对象状态
+          $("#checkAll").prop("checked",flag);
+      }
+      //修改tbody中checkbox的状态
+      function doChangeTBodyCheckBoxState(){
+           //1.获取thead中checkbox的状态
+          let flag=$(this).prop("checked");//任何一个类型为checkbox的input元素，都默认有一个checked属性
+          //2.修改tbody中checkbox的状态
+          $("#tbodyId input:checkbox").prop("checked",flag)
+      }
+      //执行客户端删除逻辑
+      function doDeleteLogs(){
+          //1.获取选中记录id
+          //1.1定义一个数组，用于存储选中的记录id值
+          let checkedIds=[];
+          //1.2获取tbody中，元素名为input，类型为checkbox,并且是选中状态的input对象
+          $("#tbodyId input:checkbox:checked")
+          //1.3迭代所有input对象，获取value属性值并存储到checkedIds数组
+          .each(function(){
+              checkedIds.push($(this).val());
+          })
+          //1.4判定是否有选中记录
+          if(checkedIds.length==0){
+              alert("请先选中");
+              return;
+          }
+          //2.构建请求参数
+          let id=checkedIds.toString();
+          console.log("id",id);
+          //3.构建请求url
+          let url=`http://localhost:80/log/${id}`;
+          //4.发送ajax请求，执行删除逻辑
+          $.ajax({
+              method:"delete",
+              url:url,
+              success(result){
+                  //处理删除响应结果
+                  doHandleDeleteResponseResult(result);
+              }
+          })
+      }
+      function doHandleDeleteResponseResult(result){
+          if(result.state==1) {
+              doHandleDeleteOk(result);
+          }else{
+              //doHandleDeleteError(result);
+          }
+      }
+      //处理删除成功以后的操作
+      function doHandleDeleteOk(result){
+          alert(result.message);
+          //doGetLogs();//简单刷新
+          let pageCurrent=window.pageCurrent;
+          let pageCount=window.pageCount;
+          let checkedAll=$("#checkAll").prop("checked");
+          //假如是最后一页，并且是全选状态，当前页面值还是大于1的
+          if(pageCurrent==pageCount&&checkedAll&&pageCurrent>1){
+              window.pageCurrent--;
+          }
+          doGetLogs();
+      }
+
+      //分页查询日志信息
+      function doGetLogs(){
+          //1.请求的参数
+          //let data=`pageCurrent=${window.pageCurrent}`;
+          let data={pageCurrent:window.pageCurrent};
+          //2.请求的url
+          let url="http://localhost/log/";
+          //3.发送ajax请求
+          $.ajax({url,data,success(result){
+               console.log(result);
+               //$("#container").html(JSON.stringify(result))
+               //处理服务端响应结果
+               doHandleQueryResponseResult(result);
+           }})
+      }
+      function doHandleQueryResponseResult(result){
+          console.log("result",result);
+          if(result.state==1){
+              doHandleQueryOk(result);//处理正确的响应结果
+          }else{
+             //doHandleQueryError(result.message);//处理错误的响应结果
+          }
+      }
+      function doHandleQueryOk(result){
+         //初始化日志列表信息
+          doInitLogTitleInfo();
+          doInitLogListInfo(result.data.list);
+         //初始化日志分页信息
+         doInitLogPageInfo(result.data);
+      }
+      function doInitLogTitleInfo(){
+          //prop为jquery中的一个操作元素属性的函数
+          //语法prop(属性名[,属性值])，假如只有属性名，则表示取值
+          $("#checkAll").prop("checked",false);
+          //.......
+      }
+      //初始化日志列表
+      function doInitLogListInfo(list){
+        //1.获取tbody对象,并清空原有内容
+          let tBody=$("#tbodyId");
+          tBody.empty();
+        //2.迭代list集合追加新内容
+          if(list.length==0){
+             let tds=$("thead").find("tr>th");//获取thead中th的个数
+             let tr=`<tr><td colspan=${tds.length}>没有找到对应记录</td></tr>` ;
+             tBody.html(tr);
+             return;
+          }
+          list.forEach((item)=>{//item代表集合中的一个元素
+             tBody.append(doCreateRow(item));
+          })
+      }
+      function doCreateRow(item){
+          return `<tr>
+                   <td><input type="checkbox" value="${item.id}"></td>
+                   <td>${item.username}</td>
+                   <td>${item.operation}</td>
+                   <td>${item.method}</td>
+                   <td>${item.ip}</td>
+                   <td>${item.status?"成功":"失败"}</td>
+                   <td>${item.createdTime}</td>
+                  </tr>`
+      }
+  </script>

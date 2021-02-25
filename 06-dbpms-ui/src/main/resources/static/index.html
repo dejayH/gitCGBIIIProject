@@ -108,9 +108,14 @@
             }
         }
         function doHandleDeleteOk(result){
+            debugger
             alert(result.message);
-            window.pageCurrent=1;
-            $("#checkAll").prop("checked",false);
+            let pageCurrent = window.pageCurrent;
+            let pageCount = window.pageCount;
+            let checkedAll=$("#checkAll").prop("checked");
+            if(pageCurrent==pageCount&&checkedAll&&pageCurrent>1){
+                window.pageCurrent--;
+            }
             doGetLogs();
         }
         function doGetLogs(){
@@ -139,6 +144,7 @@
         }
         function doHandleQueryOk(result){
             //初始化日志列表信息
+            $("#checkAll").prop("checked",false);
             doInitLogListInfo(result.data.list);
             //初始化日志分页信息
             doInitLogPageInfo(result.data);
@@ -148,6 +154,12 @@
             let tBody=$("#tbodyId");
             tBody.empty();
             //2.迭代list集合,追加新内容
+            if(list.length==0){
+                let tds=$("thead").find("tr>th");
+                let tr=`<tr><td colspan="${tds.length}">没有找到对应记录</td></tr>`
+                tBody.html(tr);
+                return;
+            }
             list.forEach((item)=>{
                 tBody.append(doCreateRow(item));
             })

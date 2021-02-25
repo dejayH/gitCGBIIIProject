@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+        <div><h1>动吧权限管理子系统</h1></div>
+        <div class="btn-menu">
+            <button id="log-btn">日志管理</button>
+            <button>菜单管理</button>
+            <button>角色管理</button>
+            <button>用户管理</button>
+        </div>
+    </div>
+    <div class="content">
+
+    </div>
+    <div class="footer">
+        <span><h3>created by 2021 ....</h3></span>
+    </div>
+  </div>
+<!--记住所有js引入都放在所有body结束位置的上面-->
+<script src="/js/jquery.min.js"></script>
+<script>
+    $("#log-btn").click(function(){
+        $(".content").load("/modules/sys/log_list.html");
+    })
+</script>
+</body>
+</html>
