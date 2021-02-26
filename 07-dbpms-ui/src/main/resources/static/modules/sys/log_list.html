@@ -64,11 +64,14 @@
 		let queryName=$("#searchNameId").val();//获取输入的用户名
 		if(queryName)params.username=queryName;//username不能随意写
 		//2.url
+		debugger
 		let url=`${baseUrl}/log/`;
 		//3.ajax request
 		$.ajax({
 			url:url,
 			data:params,
+			crossDomain:true,
+			xhrFields:{withCredentials:true},
 			success(result){
 				//处理查询到的响应结果
 				doHandleQueryResponseResult(result);

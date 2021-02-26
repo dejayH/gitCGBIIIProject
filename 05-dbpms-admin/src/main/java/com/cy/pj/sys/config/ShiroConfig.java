@@ -45,8 +45,8 @@ public class ShiroConfig {
         //配置以/**开头的资源必须都要经过认证，其中authc为shiro框架指定的认证过滤器
         //chainDefinition.addPathDefinition("/**", "authc");
         //假如配置了记住我功能,则需将过滤器authc替换为user
-//        chainDefinition.addPathDefinition("/**", "user");//UserFilter
-        chainDefinition.addPathDefinition("/**", "anon");
+        chainDefinition.addPathDefinition("/**", "user");//UserFilter
+//        chainDefinition.addPathDefinition("/**", "anon");
         return chainDefinition;
     }
 

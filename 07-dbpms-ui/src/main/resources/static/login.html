@@ -91,7 +91,7 @@
         method:"get",//默认就是get
         url:url,
         crossDomain:true,
-        xhrFields:{withCredent:true},
+        xhrFields:{withCredentials:true},
         success(result){//readyState==4 && status==200
           if(result.state==1){
             location.href = "/index.html";
